@@ -14,15 +14,16 @@ const connectToMongo =  async () => {
 
        try {
             console.log("1");
-             await mongoose.connect(mongoURI);
-            console.log("2");
+             await mongoose.connect(mongoURI, {
+              dbName: "iNotebook"
+             });
+            console.log("Connection successul");
           } catch (error) {
-            console.log("error");
+            console.log("Connection failed");
           }
     
 
 }
-
 
 
 
