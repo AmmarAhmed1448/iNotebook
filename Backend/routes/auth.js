@@ -3,8 +3,9 @@ const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
-
-router.post("/", 
+const jwt = require("jsonwebtoken");
+const JWT_SECRET = "HELLO@FUCKING@WORLD"
+router.post("/createUser", 
 
 
 
@@ -89,7 +90,7 @@ router.post("/",
     //         if(error){
     //         console.log("Error in salt");
     //     }
-    //     else if(saltStr){
+    //     else if(saltStr){tg5
     //         console.log("Salt Generated" + saltStr);
     //     }
     // })
@@ -106,7 +107,17 @@ router.post("/",
         email: req.body.email,
         password: hashedPassword
         
-    }).then(user => res.json(user))
+    }).then(user => {
+        const data = {
+            user:{
+                id: user.id
+            }
+        }
+
+        const authToken = jwt.sign(data, JWT_SECRET);
+        console.log(authToken);
+        res.json({authToken})
+    })
     .catch(err => {
         console.log("error");
         res.status(500).json({error: err})
@@ -114,4 +125,73 @@ router.post("/",
 
 });
 
+
+
+
+
+
+
+// Creating a login endpoint
+router.post("/login", 
+
+
+// For validation, use const { body, validationResult } = require('express-validator');
+// https://chat.openai.com/c/6bea7a62-32fe-4e5e-853c-5130f4e0083b
+[
+    body("email", "Enter a valid email").notEmpty().isEmail().escape(),
+    body("password").exists().notEmpty()
+],
+
+
+ async (req, res) => {
+    const result = validationResult(req);
+    if(!result.isEmpty())
+        return res.status(400).json({ errors: result.array()});
+    
+    let {email, password} = req.body;
+    try {
+        let user =  await User.findOne({email});
+        // in the above line the {email} is equivalent to {email: req.body.email}
+        // {email}; in this code, the email variable destructured above the try is used. this email variable contains the email in the request. So when we write {email}, the variable name become the property and its value i.e the value of the email variable becomes its value so we get an object.
+        // when the email is found, findOne() returns the complete document (record) and is stored in user variable 
+
+        console.log(user);          // this console will show the whole document as JSON
+        if(!user){
+            return res.status(400).json({error: "Enter corrent credentials"});
+        }
+
+        let decryptedPassword = await bcrypt.compare(password, user.password);
+        if(!decryptedPassword){
+            res.status(400).json({error: "Enter correct fucking credentials"});
+        }
+
+
+        // In the payload below, I am sending just the id of the user. This id will be used to sign am authtoken for the user.
+        const payload = {
+            user:
+            {id: user.id}
+        };
+
+        const authToken = jwt.sign(payload, JWT_SECRET);            // this signs an authtoken based on the secret key
+        res.json({authToken});
+
+    } catch (error) {
+        console.error(error);                                       // .error() writes error to the console
+        res.status(500).send("Internal server error occured")      // similar to .json(); .send() also sends response objects
+        
+    }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+)
 module.exports = router;
