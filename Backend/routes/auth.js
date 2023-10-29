@@ -81,27 +81,27 @@ router.post("/createUser",
         // res.send(req.body);
         // user.save();
 
-        // Does the same job as newUser() + user.save()
         // console.log(hashedPassword);
 
-
+        
         // Code to generate salts
         // bcrypt.genSalt(10, (error, saltStr) => {
-        //         if(error){
-        //         console.log("Error in salt");
-        //     }
-        //     else if(saltStr){tg5
-        //         console.log("Salt Generated" + saltStr);
-        //     }
-        // })
-
-
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(req.body.password, salt);
-
-
-
-
+            //         if(error){
+                //         console.log("Error in salt");
+                //     }
+                //     else if(saltStr){tg5
+                //         console.log("Salt Generated" + saltStr);
+                //     }
+                // })
+                
+                
+                const salt = await bcrypt.genSalt(10);
+                const hashedPassword = await bcrypt.hash(req.body.password, salt);
+                
+                
+                
+                
+        // Does the same job as newUser() + user.save()
         User.create({
             name: req.body.name,
             email: req.body.email,

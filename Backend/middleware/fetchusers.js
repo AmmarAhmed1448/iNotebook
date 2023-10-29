@@ -6,7 +6,7 @@ const JWT_SECRET = "HELLO@FUCKING@WORLD"
 
 
 const fetchuser = (req, res, next) => {
-    const token = req.header("auth-token");         // * "auth-token is a header field in the incoming requset to the server by the user. It is actually our JWT token that we provide to users to authenticate them"
+    const token = req.header("auth-token");         // * "auth-token is a header field in the incoming requset to /getuser by the user. It is actually our JWT token that we provide to users to authenticate them"
 
     if(token){
         // * Decoding that JWT token using verify()
