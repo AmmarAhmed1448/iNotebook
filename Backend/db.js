@@ -17,9 +17,9 @@ const connectToMongo =  async () => {
              await mongoose.connect(mongoURI, {
               dbName: "iNotebook"
              });
-            console.log("Connection successul");
+            console.log("Connection to Mongoose Database is successul");
           } catch (error) {
-            console.log("Connection failed");
+            console.log("Connection to Mongoose Database is failed");
           }
     
 
