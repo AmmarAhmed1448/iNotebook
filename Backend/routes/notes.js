@@ -134,8 +134,28 @@ router.put("/updatenotes/:id", fetchuser,
             console.error(error);                                       // .error() writes error to the console
             res.status(500).send("Internal server error occured")      // similar to .json(); .send() also sends response objects
         }
-    }
-)
+    });
+
+
+    router.delete("/deletenotes/:id", fetchuser, async (req, res) => {
+        try{
+            let notes = await Notes.findById(req.params.id);
+            if(!notes){
+                return res.status(404).send("Notes not found");
+            }
+            if(notes.user.toString() !== req.user.id){
+                return res.status(401).send("Not Allowed");
+            }
+
+            notes = await Notes.findByIdAndDelete(req.params.id);
+            res.send("Note of ID " + req.params.id + " have been deleted.");
+        }
+        catch(error){
+            console.error(error);                                       // .error() writes error to the console
+            res.status(500).send("Internal server error occured")      // similar to .json(); .send() also sends response objects
+        }
+    })
+
 
 
 module.exports = router;
