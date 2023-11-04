@@ -9,10 +9,12 @@ function App() {
     <NotesState>
       <Router>
         <Navbar />
+        <div className="container my-5">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
         </Routes>
+        </div>
       </Router>
     </NotesState>
   );
