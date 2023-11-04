@@ -5,21 +5,32 @@ import NotesContext from "./NotesContext";
 // * The NotesState component is a functional component that takes props as an argument. Its primary purpose is to act as a provider for the NotesContext
 const NotesState = (props) => {
 
-    // * Inside the component, a state object is defined. This object holds data that you want to provide to other components through the NotesContext
-    const s1 = {
-        name: "Ammar",
-        class: "5b"
-    };
+    const notesInitial = [
+        {
+            title: "Title 1"
+        },
+        {
+            title: "Title 2"
+        }
+    ]
 
-    const [state, setState] = useState(s1);
-    const update = () => {
-        setTimeout(() => {
-            setState({
-                name: "Zain",
-                class: "10b"
-            })
-        }, 2000);
-    }
+    const [notes, setNotes] = useState(notesInitial);
+
+    // * Inside the component, a state object is defined. This object holds data that you want to provide to other components through the NotesContext
+    // const s1 = {
+    //     name: "Ammar",
+    //     class: "5b"
+    // };
+
+    // const [state, setState] = useState(s1);
+    // const update = () => {
+    //     setTimeout(() => {
+    //         setState({
+    //             name: "Zain",
+    //             class: "10b"
+    //         })
+    //     }, 2000);
+    // }
 
     return (
 
@@ -28,8 +39,11 @@ const NotesState = (props) => {
 
         //* We need to pass the state and functions in the form of an object
         <NotesContext.Provider value={{ 
-            state: state, 
-            update: update 
+            // state: state, 
+            // update: update 
+
+            notes: notes,
+            setNotes: setNotes
             }}>
                 
             {props.children}
