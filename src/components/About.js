@@ -3,15 +3,15 @@ import NotesContext from "../context/notes/NotesContext";
 
 function About() {
 
-    const a = useContext(NotesContext);
+    // const a = useContext(NotesContext);
     // * In this line, you are calling useContext(NotesContext) to access the context value, and you're assigning it to the variable a. This means that a now holds the state and functions provided by the NotesContext context.
 
-    useEffect(() => {
-        a.update();
-         // eslint-disable-next-line
-    }, [])
+    // useEffect(() => {
+    //     a.update();
+    //      // eslint-disable-next-line
+    // }, [])
     return(
-        <h1>This is About {a.state.name}. He is in class {a.state.class}</h1>
+        <h1>This is About.</h1>
     );
 }
 
