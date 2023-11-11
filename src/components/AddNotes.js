@@ -44,9 +44,10 @@ function AddNote() {
                     <input type="text" className="form-control" id="description" name="description" onChange={onchange} />
                 </div>
 
-                <button type="submit" className="btn btn-primary" onClick={onclick}>Submit</button>
+                <button type="submit" className="btn btn-primary" onClick={onclick}>Add Note</button>
             </form>
-            {/* <Notes /> */}           // ! Do not uncomment this or the applicaiton will be fucked up.
+            {/* <Notes /> */}           
+            {/* Do not uncomment this or the applicaiton will be fucked up. */}
         </div>
     );
 }

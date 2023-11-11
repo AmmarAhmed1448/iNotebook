@@ -5,126 +5,42 @@ import NotesContext from "./NotesContext";
 // * The NotesState component is a functional component that takes props as an argument. Its primary purpose is to act as a provider for the NotesContext
 const NotesState = (props) => {
 
-    const notesInitial = [
-
-        {
-            "_id": "653e34a9b95a0e8b59f13b4b",
-            "user": "6526fe5e25df46beecd8caee",
-            "title": "My first note",
-            "description": "This is my first note on my created application",
-            "tag": "first",
-            "date": "2023-10-29T10:32:09.864Z",
-            "__v": 0
-        },
-        {
-            "_id": "653f99c6e473ba45b1c7c85d",
-            "user": "6526fe5e25df46beecd8caee",
-            "title": "My second note",
-            "description": "This is my seconds note on my own created application",
-            "tag": "second",
-            "date": "2023-10-30T11:55:50.637Z",
-            "__v": 0
-        },
-        {
-            "_id": "653f99dbe473ba45b1c7c85f",
-            "user": "6526fe5e25df46beecd8caee",
-            "title": "My third note",
-            "description": "This is my third note on my own created application",
-            "tag": "third",
-            "date": "2023-10-30T11:56:11.127Z",
-            "__v": 0
-        },
-
-        {
-            "_id": "653e34a9b95ae0e8b59f13b4b",
-            "user": "6526fe5e25df46beecd8caee",
-            "title": "My first note",
-            "description": "This is my first note on my created application",
-            "tag": "first",
-            "date": "2023-10-29T10:32:09.864Z",
-            "__v": 0
-        },
-        {
-            "_id": "653f99c6e473bar45b1c7c85d",
-            "user": "6526fe5e25df46beecd8caee",
-            "title": "My second note",
-            "description": "This is my seconds note on my own created application",
-            "tag": "second",
-            "date": "2023-10-30T11:55:50.637Z",
-            "__v": 0
-        },
-        {
-            "_id": "653f99dbe473bat45b1c7c85f",
-            "user": "6526fe5e25df46beecd8caee",
-            "title": "My third note",
-            "description": "This is my third note on my own created application",
-            "tag": "third",
-            "date": "2023-10-30T11:56:11.127Z",
-            "__v": 0
-        },
-
-        {
-            "_id": "653e34a9b95a0eu8b59f13b4b",
-            "user": "6526fe5e25df46beecd8caee",
-            "title": "My first note",
-            "description": "This is my first note on my created application",
-            "tag": "first",
-            "date": "2023-10-29T10:32:09.864Z",
-            "__v": 0
-        },
-        {
-            "_id": "653f99c6e473ba45b1ic7c85d",
-            "user": "6526fe5e25df46beecd8caee",
-            "title": "My second note",
-            "description": "This is my seconds note on my own created application",
-            "tag": "second",
-            "date": "2023-10-30T11:55:50.637Z",
-            "__v": 0
-        },
-        {
-            "_id": "653f99dbe473ba45b1oc7c85f",
-            "user": "6526fe5e25df46beecd8caee",
-            "title": "My third note",
-            "description": "This is my third note on my own created application",
-            "tag": "third",
-            "date": "2023-10-30T11:56:11.127Z",
-            "__v": 0
-        },
-        {
-            "_id": "653e34a9b95a0e8b59fa13b4b",
-            "user": "6526fe5e25df46beecd8caee",
-            "title": "My first note",
-            "description": "This is my first note on my created application",
-            "tag": "first",
-            "date": "2023-10-29T10:32:09.864Z",
-            "__v": 0
-        },
-        {
-            "_id": "653f99c6e473ba45b1cs7c85d",
-            "user": "6526fe5e25df46beecd8caee",
-            "title": "My second note",
-            "description": "This is my seconds note on my own created application",
-            "tag": "second",
-            "date": "2023-10-30T11:55:50.637Z",
-            "__v": 0
-        },
-        {
-            "_id": "653f99dbe473ba45b1dc7c85f",
-            "user": "6526fe5e25df46beecd8caee",
-            "title": "My third note",
-            "description": "This is my third note on my own created application",
-            "tag": "third",
-            "date": "2023-10-30T11:56:11.127Z",
-            "__v": 0
-        }
-
-    ]
-
+    const host = "http://localhost:5000"
+    const notesInitial = [];
     const [notes, setNotes] = useState(notesInitial);
 
+    //* Get all notes
+    const getNotes = async(title, description, tag) => {
+        
+        const response = await fetch(`${host}/api/notes/fetchallnotes`, {
+            method: "GET", // *GET, POST, PUT, DELETE, etc.
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyNmZlNWUyNWRmNDZiZWVjZDhjYWVlIn0sImlhdCI6MTY5ODU2MTgxNH0.Fx_NNHIT1cWFeN-Xq0_ZNK1mBb-nMGxDL4CMeGpwnok",
+
+            }
+
+        });
+        const json = await response.json();
+        console.log(json);
+        setNotes(json)
+
+    }
     // * Add Note
 
-    const addNote = (title, description, tag) =>{
+    const addNote = async(title, description, tag) => {
+        
+        const response = await fetch(`${host}/api/notes/addnotes`, {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyNmZlNWUyNWRmNDZiZWVjZDhjYWVlIn0sImlhdCI6MTY5ODU2MTgxNH0.Fx_NNHIT1cWFeN-Xq0_ZNK1mBb-nMGxDL4CMeGpwnok",
+
+            },
+            body: JSON.stringify({title, description, tag}), // body data type must match "Content-Type" header
+        });
+        
+        const json = response.json(); // parses JSON response into native JavaScript objects
         const dummyAddNote = {
             "_id": "653f99dbe473ba45b1dc7c85f",
             "user": "6526fe5e25df46beecd8caee",
@@ -142,9 +58,38 @@ const NotesState = (props) => {
         setNotes(updatedNotes);
     }
     // * Delete Note
-    
+
+    const deleteNotes = (id) => {
+        const newNotes = notes.filter((note) => { return note._id !== id });
+        setNotes(newNotes);
+    }
     // * Edit Note
 
+    const editNotes = async (id, title, description, tag) => {
+
+        const response = await fetch(`${host}/api/notes/updatenotes/${id}`, {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyNmZlNWUyNWRmNDZiZWVjZDhjYWVlIn0sImlhdCI6MTY5ODU2MTgxNH0.Fx_NNHIT1cWFeN-Xq0_ZNK1mBb-nMGxDL4CMeGpwnok",
+
+            },
+            body: JSON.stringify({title, description, tag}), // body data type must match "Content-Type" header
+        });
+        const json = response.json(); // parses JSON response into native JavaScript objects
+
+
+
+        for (let index = 0; index < notes.length; index++) {
+            const element = notes[index];
+            if (element._id === id) {
+                element.title = title;
+                element.description = description;
+                element.tag = tag;
+            }
+
+        }
+    }
     // * Inside the component, a state object is defined. This object holds data that you want to provide to other components through the NotesContext
     // const s1 = {
     //     name: "Ammar",
@@ -172,7 +117,9 @@ const NotesState = (props) => {
             // update: update 
 
             notes: notes,
-            addNote: addNote
+            addNote: addNote,
+            deleteNotes: deleteNotes,
+            getNotes: getNotes
         }}>
 
             {props.children}
