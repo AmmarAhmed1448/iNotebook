@@ -22,7 +22,7 @@ const NotesState = (props) => {
 
         });
         const json = await response.json();
-        console.log(json);
+        // console.log(json);
         setNotes(json)
 
     }
@@ -39,8 +39,8 @@ const NotesState = (props) => {
             },
             body: JSON.stringify({title, description, tag}), // body data type must match "Content-Type" header
         });
-        
-        const json = response.json(); // parses JSON response into native JavaScript objects
+
+        const json = await response.json(); // parses JSON response into native JavaScript objects
         const dummyAddNote = {
             "_id": "653f99dbe473ba45b1dc7c85f",
             "user": "6526fe5e25df46beecd8caee",
@@ -59,7 +59,19 @@ const NotesState = (props) => {
     }
     // * Delete Note
 
-    const deleteNotes = (id) => {
+    const deleteNotes = async (id) => {
+
+        const response = await fetch(`${host}/api/notes/deletenotes/${id}`, {
+            method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyNmZlNWUyNWRmNDZiZWVjZDhjYWVlIn0sImlhdCI6MTY5ODU2MTgxNH0.Fx_NNHIT1cWFeN-Xq0_ZNK1mBb-nMGxDL4CMeGpwnok",
+
+            },
+        });
+        const json =  response.json(); // parses JSON response into native JavaScript objects
+        console.log(json);
+
         const newNotes = notes.filter((note) => { return note._id !== id });
         setNotes(newNotes);
     }
@@ -68,7 +80,7 @@ const NotesState = (props) => {
     const editNotes = async (id, title, description, tag) => {
 
         const response = await fetch(`${host}/api/notes/updatenotes/${id}`, {
-            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            method: "PUT", // *GET, POST, PUT, DELETE, etc.
             headers: {
                 "Content-Type": "application/json",
                 "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyNmZlNWUyNWRmNDZiZWVjZDhjYWVlIn0sImlhdCI6MTY5ODU2MTgxNH0.Fx_NNHIT1cWFeN-Xq0_ZNK1mBb-nMGxDL4CMeGpwnok",
@@ -76,19 +88,27 @@ const NotesState = (props) => {
             },
             body: JSON.stringify({title, description, tag}), // body data type must match "Content-Type" header
         });
-        const json = response.json(); // parses JSON response into native JavaScript objects
+        const json = await response.json(); // parses JSON response into native JavaScript objects
 
 
-
-        for (let index = 0; index < notes.length; index++) {
-            const element = notes[index];
+        // const [newNotes, setNewNotes] = useState(notes)
+        // const newNotes = notes;
+        const newNotes = JSON.parse(JSON.stringify(notes));
+        // console.log("NewNotes" + newNotes);
+        // console.log(newNotes2);
+        for (let index = 0; index < newNotes.length; index++) {
+            const element = newNotes[index];
             if (element._id === id) {
-                element.title = title;
-                element.description = description;
-                element.tag = tag;
+                newNotes[index].title = title;
+                newNotes[index].description = description;
+                newNotes[index].tag = tag;
+                break;
             }
 
         }
+        setNotes(newNotes);
+
+        // setNotes()
     }
     // * Inside the component, a state object is defined. This object holds data that you want to provide to other components through the NotesContext
     // const s1 = {
@@ -119,7 +139,8 @@ const NotesState = (props) => {
             notes: notes,
             addNote: addNote,
             deleteNotes: deleteNotes,
-            getNotes: getNotes
+            getNotes: getNotes,
+            editNotes: editNotes
         }}>
 
             {props.children}
