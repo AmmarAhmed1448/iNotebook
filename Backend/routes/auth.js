@@ -6,10 +6,12 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "HELLO@FUCKING@WORLD";
 const fetchuser = require("../middleware/fetchusers");
+
+
+
+
+// Create user endpoint
 router.post("/createUser",
-
-
-
 
     [
 
@@ -31,7 +33,9 @@ router.post("/createUser",
 
 
     , async (req, res) => {
+        let success = false;
         const errors = validationResult(req);
+        // console.log("This is validation");
 
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
@@ -116,7 +120,8 @@ router.post("/createUser",
 
             const authToken = jwt.sign(data, JWT_SECRET);
             console.log(authToken);
-            res.json({ authToken })
+            success = true;
+            res.json({ success, authToken })
         })
             .catch(err => {
                 console.log("error");
