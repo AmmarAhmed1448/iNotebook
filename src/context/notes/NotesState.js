@@ -40,16 +40,16 @@ const NotesState = (props) => {
             body: JSON.stringify({title, description, tag}), // body data type must match "Content-Type" header
         });
 
-        const json = await response.json(); // parses JSON response into native JavaScript objects
-        const dummyAddNote = {
-            "_id": "653f99dbe473ba45b1dc7c85f",
-            "user": "6526fe5e25df46beecd8caee",
-            "title": title,
-            "description": description,
-            "tag": tag,
-            "date": "2023-10-30T11:56:11.127Z",
-            "__v": 0
-        }
+        const dummyAddNote = await response.json(); // parses JSON response into native JavaScript objects
+        // const dummyAddNote = {
+        //     "_id": "653f99dbe473ba45b1dc7c85f",
+        //     "user": "6526fe5e25df46beecd8caee",
+        //     "title": title,
+        //     "description": description,
+        //     "tag": tag,
+        //     "date": "2023-10-30T11:56:11.127Z",
+        //     "__v": 0
+        // }
         const updatedNotes = [...notes, dummyAddNote]
 
         // const updatedNotes = [notes.concat(dummyAddNote)]
@@ -69,8 +69,8 @@ const NotesState = (props) => {
 
             },
         });
-        const json =  response.json(); // parses JSON response into native JavaScript objects
-        console.log(json);
+        // const json =  response.json(); // parses JSON response into native JavaScript objects
+        // console.log(json);
 
         const newNotes = notes.filter((note) => { return note._id !== id });
         setNotes(newNotes);
