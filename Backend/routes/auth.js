@@ -145,6 +145,7 @@ router.post("/login",
 
     async (req, res) => {
         const result = validationResult(req);
+        let success = false;
         if (!result.isEmpty())
             return res.status(400).json({ errors: result.array() });
 
@@ -155,14 +156,15 @@ router.post("/login",
             // {email}; in this code, the email variable destructured above the try is used. this email variable contains the email in the request. So when we write {email}, the variable name become the property and its value i.e the value of the email variable becomes its value so we get an object.
             // when the email is found, findOne() returns the complete document (record) and is stored in user variable 
 
-            console.log(user);          // this console will show the whole document as JSON
+            console.log("user: ", user);          // this console will show the whole document as JSON
             if (!user) {
                 return res.status(400).json({ error: "Enter corrent credentials" });
             }
 
             let decryptedPassword = await bcrypt.compare(password, user.password);
+            console.log("decrypted Password: ", decryptedPassword)
             if (!decryptedPassword) {
-                res.status(400).json({ error: "Enter correct fucking credentials" });
+                return res.status(400).json({ error: "Enter correct fucking password" });
             }
 
 
@@ -173,7 +175,8 @@ router.post("/login",
             };
 
             const authToken = jwt.sign(payload, JWT_SECRET);            // this signs an authtoken based on the secret key
-            res.json({ authToken });
+            success = true;
+            res.json({success, authToken });
 
         } catch (error) {
             console.error(error);                                       // .error() writes error to the console
