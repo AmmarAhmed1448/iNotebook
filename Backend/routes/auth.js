@@ -23,6 +23,7 @@ router.post("/createUser",
             const user = await User.findOne({ email: value });
             if (user) {
                 throw new Error('Email is already in use');
+                // console.log("Email in use");
             }
         }),
         body("password", "Enter a valid password").isLength({ min: 10 }),
@@ -169,7 +170,7 @@ router.post("/login",
             let decryptedPassword = await bcrypt.compare(password, user.password);
             console.log("decrypted Password: ", decryptedPassword)
             if (!decryptedPassword) {
-                return res.status(400).json({ error: "Enter correct fucking password" });
+                return res.status(400).json({success, error: "Enter correct fucking password" });
             }
 
 

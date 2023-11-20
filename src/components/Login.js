@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-function Login() {
+import Alert from "./Alert";
+
+function Login(props) {
 
     const logInURL = "http://localhost:5000/api/auth/login";
     const [creds, setCreds] = useState({
@@ -28,11 +30,12 @@ function Login() {
             // console.log({email: creds.email, password: creds.password});
 
 
-            if(json.success){
+            if (json.success) {
                 navigate("/");
+                props.showAlert("Login successful", "success")
             }
-            else{
-                alert("Enter correct credentials")
+            else {
+                props.showAlert("Invalid Credentials", "warning")
             }
             
         }

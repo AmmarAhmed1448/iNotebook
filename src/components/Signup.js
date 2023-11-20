@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Alert from "./Alert";
 
 
 const signupInURL = "http://localhost:5000/api/auth/createUser";
-function Signup() {
+function Signup(props) {
 
     const [creds, setCreds] = useState({
         name: "",
@@ -26,15 +27,16 @@ function Signup() {
 
 
         const json = await response.json();
-        console.log("This is signup json: ", json);
+        console.log("This is signup json: ", json.errors);
         console.log({email: creds.email, password: creds.password});
 
 
         if (json.success) {
             navigate("/");
+            props.showAlert("Account created successfully", "success")
         }
         else {
-            alert("Enter correct credentials")
+            props.showAlert("Enter valid credentials", "warning")
         }
 
     }
