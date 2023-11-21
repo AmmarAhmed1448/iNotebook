@@ -16,7 +16,7 @@ const NotesState = (props) => {
             method: "GET", // *GET, POST, PUT, DELETE, etc.
             headers: {
                 "Content-Type": "application/json",
-                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyNmZlNWUyNWRmNDZiZWVjZDhjYWVlIn0sImlhdCI6MTY5ODU2MTgxNH0.Fx_NNHIT1cWFeN-Xq0_ZNK1mBb-nMGxDL4CMeGpwnok",
+                "auth-token": localStorage.getItem('token'),
 
             }
 
@@ -34,7 +34,7 @@ const NotesState = (props) => {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             headers: {
                 "Content-Type": "application/json",
-                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyNmZlNWUyNWRmNDZiZWVjZDhjYWVlIn0sImlhdCI6MTY5ODU2MTgxNH0.Fx_NNHIT1cWFeN-Xq0_ZNK1mBb-nMGxDL4CMeGpwnok",
+                "auth-token": localStorage.getItem('token'),
 
             },
             body: JSON.stringify({title, description, tag}), // body data type must match "Content-Type" header
@@ -65,12 +65,12 @@ const NotesState = (props) => {
             method: "DELETE", // *GET, POST, PUT, DELETE, etc.
             headers: {
                 "Content-Type": "application/json",
-                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyNmZlNWUyNWRmNDZiZWVjZDhjYWVlIn0sImlhdCI6MTY5ODU2MTgxNH0.Fx_NNHIT1cWFeN-Xq0_ZNK1mBb-nMGxDL4CMeGpwnok",
+                "auth-token": localStorage.getItem('token'),
 
             },
         });
-        // const json =  response.json(); // parses JSON response into native JavaScript objects
-        // console.log(json);
+        const json =  response.json(); // parses JSON response into native JavaScript objects
+        console.log(json);
 
         const newNotes = notes.filter((note) => { return note._id !== id });
         setNotes(newNotes);
@@ -83,13 +83,13 @@ const NotesState = (props) => {
             method: "PUT", // *GET, POST, PUT, DELETE, etc.
             headers: {
                 "Content-Type": "application/json",
-                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyNmZlNWUyNWRmNDZiZWVjZDhjYWVlIn0sImlhdCI6MTY5ODU2MTgxNH0.Fx_NNHIT1cWFeN-Xq0_ZNK1mBb-nMGxDL4CMeGpwnok",
+                "auth-token": localStorage.getItem('token'),
 
             },
             body: JSON.stringify({title, description, tag}), // body data type must match "Content-Type" header
         });
         const json = await response.json(); // parses JSON response into native JavaScript objects
-
+        console.log(json)
 
         // const [newNotes, setNewNotes] = useState(notes)
         // const newNotes = notes;

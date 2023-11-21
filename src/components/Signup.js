@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Alert from "./Alert";
 
 
 const signupInURL = "http://localhost:5000/api/auth/createUser";
@@ -49,6 +48,7 @@ function Signup(props) {
 
     return (
         <div className="container">
+            <h2>Create an account to use iNotebook</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="name" className="form-label">Name</label>

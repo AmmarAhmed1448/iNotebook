@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Alert from "./Alert";
 
 function Login(props) {
 
@@ -31,8 +30,9 @@ function Login(props) {
 
 
             if (json.success) {
-                navigate("/");
+                localStorage.setItem("token", json.authToken)
                 props.showAlert("Login successful", "success")
+                navigate("/");
             }
             else {
                 props.showAlert("Invalid Credentials", "warning")
@@ -45,7 +45,9 @@ function Login(props) {
         }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div>
+            <h2>Log to continue to iNotebook</h2>
+            <form onSubmit={handleSubmit}>
             <div className="mb-3">
                 <label htmlFor="email" className="form-label">Email address</label>
                 <input type="email" className="form-control" name="email" value={creds.email} id="email" onChange={handleChange}/>
@@ -56,6 +58,7 @@ function Login(props) {
             </div>
             <button type="submit" className="btn btn-primary">Submit</button>
         </form>
+        </div>
     );
 }
 
